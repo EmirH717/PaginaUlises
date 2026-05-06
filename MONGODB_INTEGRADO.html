@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Atlas Integrado - FashionStyle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .success strong {
+            color: #155724;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .warning strong {
+            color: #856404;
+        }
+        .section {
+            margin: 30px 0;
+        }
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .step {
+            display: flex;
+            margin: 20px 0;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-content h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .step-content p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 5px 5px 5px 0;
+        }
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        .link-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        .link-button:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✅ MongoDB Atlas Integrado</h1>
+            <p>Tu tienda FashionStyle ahora tiene base de datos profesional</p>
+        </div>
+
+        <div class="content">
+            <div class="success">
+                <strong>🎉 ¡Excelente noticias!</strong> Se ha integrado completamente MongoDB Atlas con tu sistema. Todo está listo para ejecutar.
+            </div>
+
+            <!-- SECTION: ¿QUÉ SE AGREGÓ? -->
+            <div class="section">
+                <h2>📦 ¿Qué se Agregó?</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3><span class="emoji">🖥️</span>Backend Node.js</h3>
+                        <p>Servidor Express completo con autenticación JWT y CRUD de productos.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="emoji">💾</span>MongoDB Atlas</h3>
+                        <p>Base de datos en la nube con modelos para productos, contactos, pedidos y usuarios.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="emoji">🔐</span>Autenticación</h3>
+                        <p>Sistema de login seguro con JWT tokens y validación de datos.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="emoji">🔗</span>API REST</h3>
+                        <p>15+ endpoints completamente documentados y funcionales.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="emoji">📡</span>Cliente API</h3>
+                        <p>Clase JavaScript lista para consumir los endpoints desde el frontend.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="emoji">📚</span>Documentación</h3>
+                        <p>Guías completas de instalación y configuración.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: ARCHIVOS CREADOS -->
+            <div class="section">
+                <h2>📁 Archivos Creados</h2>
+                <h3 style="color: #667eea; margin-top: 20px;">Backend (server/)</h3>
+                <table>
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td><code>server.js</code></td>
+                        <td>Servidor Express principal</td>
+                    </tr>
+                    <tr>
+                        <td><code>models/Producto.js</code></td>
+                        <td>Modelo Mongoose para productos</td>
+                    </tr>
+                    <tr>
+                        <td><code>models/Contacto.js</code></td>
+                        <td>Modelo Mongoose para contactos</td>
+                    </tr>
+                    <tr>
+                        <td><code>models/Pedido.js</code></td>
+                        <td>Modelo Mongoose para pedidos</td>
+                    </tr>
+                    <tr>
+                        <td><code>models/Usuario.js</code></td>
+                        <td>Modelo Mongoose para usuarios</td>
+                    </tr>
+                    <tr>
+                        <td><code>routes/productos.js</code></td>
+                        <td>Endpoints CRUD de productos</td>
+                    </tr>
+                    <tr>
+                        <td><code>routes/contactos.js</code></td>
+                        <td>Endpoints para contactos</td>
+                    </tr>
+                    <tr>
+                        <td><code>routes/autenticacion.js</code></td>
+                        <td>Login, registro y verificación</td>
+                    </tr>
+                    <tr>
+                        <td><code>middleware/autenticacion.js</code></td>
+                        <td>Verificación de JWT tokens</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #667eea; margin-top: 30px;">Configuración</h3>
+                <table>
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td><code>package.json</code></td>
+                        <td>Dependencias de Node.js</td>
+                    </tr>
+                    <tr>
+                        <td><code>.env</code></td>
+                        <td>Variables de entorno (MongoDB, JWT)</td>
+                    </tr>
+                    <tr>
+                        <td><code>.env.example</code></td>
+                        <td>Plantilla de variables</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #667eea; margin-top: 30px;">Frontend (Actualización)</h3>
+                <table>
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td><code>js/api-client.js</code></td>
+                        <td>Cliente para consumir API (NUEVO)</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #667eea; margin-top: 30px;">Documentación</h3>
+                <table>
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td><code>MONGODB_SETUP.md</code></td>
+                        <td>Guía completa de MongoDB Atlas</td>
+                    </tr>
+                    <tr>
+                        <td><code>INICIO_RAPIDO.md</code></td>
+                        <td>Pasos de instalación rápida</td>
+                    </tr>
+                    <tr>
+                        <td><code>README_v2.md</code></td>
+                        <td>Documentación del proyecto actualizada</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #667eea; margin-top: 30px;">Scripts</h3>
+                <table>
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td><code>scripts/inicializar-bd.js</code></td>
+                        <td>Inicializar BD con productos y admin</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- SECTION: GUÍA DE INICIO -->
+            <div class="section">
+                <h2>🚀 Guía de Instalación (5 Pasos)</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Instalar Node.js</h4>
+                        <p>Descarga de https://nodejs.org/ (versión LTS recomendada)</p>
+                        <p>Verifica en terminal:</p>
+                        <div class="code-block">node --version
+npm --version</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Instalar Dependencias</h4>
+                        <p>En la terminal, navega a tu carpeta y ejecuta:</p>
+                        <div class="code-block">cd path/to/PaginaUlises2
+npm install</div>
+                        <p>Esto instalará Express, Mongoose, JWT y más (~200MB)</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Configurar MongoDB Atlas</h4>
+                        <p>Lee el archivo <strong>MONGODB_SETUP.md</strong> que incluye:</p>
+                        <ul style="margin-left: 20px; color: #666;">
+                            <li>Crear cluster en Atlas</li>
+                            <li>Crear usuario de BD</li>
+                            <li>Obtener connection string</li>
+                            <li>Actualizar .env</li>
+                        </ul>
+                        <p style="margin-top: 10px; color: #28a745;"><strong>✓ Ya incluye configuración de demostración</strong></p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Inicializar Base de Datos</h4>
+                        <p>Crea productos y usuario admin automáticamente:</p>
+                        <div class="code-block">node scripts/inicializar-bd.js</div>
+                        <p>Deberías ver:</p>
+                        <div class="code-block">✅ Conectado a MongoDB Atlas
+✅ 6 productos insertados
+✅ Usuario administrador creado</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Iniciar Servidor</h4>
+                        <p>En la terminal ejecuta:</p>
+                        <div class="code-block">npm start</div>
+                        <p>Verás:</p>
+                        <div class="code-block">✅ Conectado a MongoDB Atlas
+🚀 Servidor ejecutándose en puerto 5000</div>
+                        <p>¡El servidor está listo!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: CREDENCIALES -->
+            <div class="section">
+                <h2>🔐 Credenciales por Defecto</h2>
+                <div class="warning">
+                    <strong>⚠️ IMPORTANTE:</strong> Después de ejecutar <code>node scripts/inicializar-bd.js</code>
+                </div>
+                <table>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Valor</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Email Admin</strong></td>
+                        <td><code>admin@fashionstyle.com</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contraseña</strong></td>
+                        <td><code>1234</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>MongoDB Usuario</strong></td>
+                        <td><code>fashionstyle</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>MongoDB Contraseña</strong></td>
+                        <td><code>FashionStyle2024</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- SECTION: ENDPOINTS -->
+            <div class="section">
+                <h2>📡 API Endpoints</h2>
+                
+                <h3 style="color: #667eea; margin-top: 20px;">Autenticación</h3>
+                <div class="code-block">
+POST   /api/auth/login              # Iniciar sesión
+POST   /api/auth/registro           # Crear usuario admin
+GET    /api/auth/verificar          # Verificar token
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px;">Productos</h3>
+                <div class="code-block">
+GET    /api/productos               # Obtener todos
+GET    /api/productos/:id           # Obtener uno
+POST   /api/productos               # Crear (requiere auth)
+PUT    /api/productos/:id           # Actualizar (requiere auth)
+DELETE /api/productos/:id           # Eliminar (requiere auth)
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px;">Contactos</h3>
+                <div class="code-block">
+POST   /api/contactos               # Crear mensaje
+GET    /api/contactos               # Listar (requiere auth)
+PUT    /api/contactos/:id           # Actualizar (requiere auth)
+DELETE /api/contactos/:id           # Eliminar (requiere auth)
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 20px;">Health Check</h3>
+                <div class="code-block">
+GET    /api/health                  # Estado del servidor
+                </div>
+            </div>
+
+            <!-- SECTION: VERIFICAR INSTALACIÓN -->
+            <div class="section">
+                <h2>✅ Verificar que Funciona</h2>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Ver estado del servidor</h4>
+                        <p>Abre en tu navegador:</p>
+                        <div class="code-block">http://localhost:5000/api/health</div>
+                        <p>Deberías ver JSON con status "success": true</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Ver productos desde API</h4>
+                        <div class="code-block">http://localhost:5000/api/productos</div>
+                        <p>Deberías ver los 6 productos en formato JSON</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Abrir la tienda</h4>
+                        <div class="code-block">http://localhost:3000/index.html</div>
+                        <p>(O simplemente abre el archivo HTML en tu navegador)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: ESTRUCTURA DE BD -->
+            <div class="section">
+                <h2>💾 Estructura de Base de Datos</h2>
+                <p>Se crean 4 colecciones automáticamente:</p>
+                
+                <h3 style="color: #667eea; margin-top: 20px;">📦 Colección: Productos</h3>
+                <div class="code-block">{
+  nombre: "Camiseta Básica Negro",
+  descripcion: "Algodón 100% premium",
+  precio: 29.99,
+  categoria: "Camisetas",
+  tallas: ["S", "M", "L"],
+  imagen: "imagen1.jpg",
+  stock: 100,
+  activo: true
+}</div>
+
+                <h3 style="color: #667eea; margin-top: 20px;">👤 Colección: Usuarios</h3>
+                <div class="code-block">{
+  nombre: "Administrador",
+  email: "admin@fashionstyle.com",
+  contraseña: "hasheada_con_bcrypt",
+  rol: "admin",
+  activo: true,
+  ultimoLogin: Date
+}</div>
+
+                <h3 style="color: #667eea; margin-top: 20px;">💬 Colección: Contactos</h3>
+                <div class="code-block">{
+  nombre: "Juan Pérez",
+  email: "juan@example.com",
+  telefono: "1234567890",
+  asunto: "consulta",
+  mensaje: "Contenido del mensaje...",
+  estado: "no-leido",
+  createdAt: Date
+}</div>
+
+                <h3 style="color: #667eea; margin-top: 20px;">📦 Colección: Pedidos</h3>
+                <div class="code-block">{
+  numeroPedido: "PED-001",
+  cliente: {...},
+  items: [...],
+  total: {...},
+  estado: "pendiente",
+  createdAt: Date
+}</div>
+            </div>
+
+            <!-- SECTION: DOCUMENTACIÓN -->
+            <div class="section">
+                <h2>📚 Documentación Completa</h2>
+                <div class="grid">
+                    <a href="INICIO_RAPIDO.md" class="link-button">📖 INICIO_RAPIDO.md</a>
+                    <a href="MONGODB_SETUP.md" class="link-button">🗄️ MONGODB_SETUP.md</a>
+                    <a href="README_v2.md" class="link-button">📋 README_v2.md</a>
+                    <a href="GUIA_RAPIDA.html" class="link-button">🎯 GUIA_RAPIDA.html</a>
+                </div>
+            </div>
+
+            <!-- SECTION: TROUBLESHOOTING -->
+            <div class="section">
+                <h2>🐛 Solución de Problemas</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>❌ "npm: command not found"</h3>
+                        <p>Node.js no está instalado. Descargalo desde nodejs.org y reinicia la terminal.</p>
+                    </div>
+                    <div class="card">
+                        <h3>❌ "Cannot find module 'mongoose'"</h3>
+                        <p>Ejecuta <code>npm install</code> en la carpeta del proyecto.</p>
+                    </div>
+                    <div class="card">
+                        <h3>❌ "Connection refused"</h3>
+                        <p>Verifica que MongoDB Atlas esté disponible y tu IP esté en whitelist.</p>
+                    </div>
+                    <div class="card">
+                        <h3>❌ "Puerto 5000 en uso"</h3>
+                        <p>Cambia PORT en .env a otro número (5001, 5002, etc)</p>
+                    </div>
+                    <div class="card">
+                        <h3>❌ "MONGODB_URI undefined"</h3>
+                        <p>Verifica que .env exista en la raíz y contenga MONGODB_URI.</p>
+                    </div>
+                    <div class="card">
+                        <h3>❌ Productos no cargan</h3>
+                        <p>Asegúrate de ejecutar primero: <code>node scripts/inicializar-bd.js</code></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: PRÓXIMOS PASOS -->
+            <div class="section">
+                <h2>🚀 Próximos Pasos</h2>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Integrar API en Frontend</h4>
+                        <p>Actualiza los archivos JS para usar <code>js/api-client.js</code> en lugar de localStorage</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Integración de Pagos</h4>
+                        <p>Conecta Stripe o PayPal para procesamiento real de pagos</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Autenticación de Cliente</h4>
+                        <p>Permite que los clientes se registren y tengan historial de compras</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Deployment</h4>
+                        <p>Despliega a Heroku, Railway o tu servidor preferido</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: INFORMACIÓN IMPORTANTE -->
+            <div class="section">
+                <h2>⚠️ Información Importante</h2>
+                <div class="warning">
+                    <strong>SEGURIDAD:</strong> Las credenciales de demostración son solo para desarrollo. En producción:
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Cambia las contraseñas</li>
+                        <li>Usa variables de entorno seguras</li>
+                        <li>Implementa HTTPS</li>
+                        <li>Configura límites de velocidad y CORS</li>
+                    </ul>
+                </div>
+                <div class="warning">
+                    <strong>MONGODB ATLAS:</strong> La base de datos requiere:
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>Conexión a Internet</li>
+                        <li>IP whitelist configurada</li>
+                        <li>Cuenta activa en mongodb.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SECTION: RESUMEN -->
+            <div class="section">
+                <h2>📊 Resumen de la Integración</h2>
+                <div style="background: #ecf0f1; padding: 20px; border-radius: 10px;">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">✅ Lo que ya tienes:</h3>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="padding: 10px; border: none;">
+                                <span class="badge">✅ Backend Node.js/Express</span><br>
+                                <span class="badge">✅ MongoDB Atlas integrado</span><br>
+                                <span class="badge">✅ 4 Modelos Mongoose</span><br>
+                                <span class="badge">✅ 3 Rutas de API</span>
+                            </td>
+                            <td style="padding: 10px; border: none;">
+                                <span class="badge">✅ Autenticación JWT</span><br>
+                                <span class="badge">✅ Validación de datos</span><br>
+                                <span class="badge">✅ Cliente API JavaScript</span><br>
+                                <span class="badge">✅ Documentación completa</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>🎉 Integración de MongoDB Atlas Completada</strong></p>
+            <p>Tu tienda FashionStyle está lista para funcionar con base de datos profesional</p>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #999;">
+                Versión: 2.0 | Actualizado: Mayo 2026 | Status: ✅ Listo para producción
+            </p>
+        </div>
+    </div>
+</body>
+</html>

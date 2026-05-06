@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - FashionStyle</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">👗 FashionStyle</a>
+            <nav>
+                <a href="index.html">Principal</a>
+                <a href="productos.html">Productos</a>
+                <a href="acerca-de-nosotros.html">Acerca de Nosotros</a>
+                <a href="contacto.html">Contacto</a>
+                <div class="user-menu">
+                    <div class="carrito-icon">
+                        <a href="carrito.html">🛒 Carrito</a>
+                        <div class="carrito-count" style="display: none;">0</div>
+                    </div>
+                    <a href="admin/login.html">Administrador</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Contacto</h1>
+            <p>Estamos aquí para ayudarte. ¿Tienes preguntas? ¡Ponte en contacto con nosotros!</p>
+        </section>
+
+        <section class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- Formulario de contacto -->
+                <div>
+                    <h2 style="color: var(--color-primario); margin-bottom: 1.5rem;">Envíanos un Mensaje</h2>
+                    <form id="formulario-contacto" onsubmit="enviarContacto(event)">
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="asunto">Asunto</label>
+                            <select id="asunto" name="asunto" required>
+                                <option value="">Selecciona un asunto</option>
+                                <option value="consulta">Consulta General</option>
+                                <option value="pedido">Sobre mi Pedido</option>
+                                <option value="devolucion">Devolución o Cambio</option>
+                                <option value="quejas">Quejas o Sugerencias</option>
+                                <option value="colaboracion">Colaboración</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje</label>
+                            <textarea id="mensaje" name="mensaje" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primario" style="width: 100%;">Enviar Mensaje</button>
+                    </form>
+                </div>
+
+                <!-- Información de contacto -->
+                <div>
+                    <h2 style="color: var(--color-primario); margin-bottom: 1.5rem;">Información de Contacto</h2>
+                    
+                    <div style="background: var(--color-fondo); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h3 style="color: var(--color-primario); margin-bottom: 0.5rem;">📍 Dirección</h3>
+                        <p>Calle Principal 123<br>Centro Comercial Fashion<br>Ciudad, Estado 12345</p>
+                    </div>
+
+                    <div style="background: var(--color-fondo); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h3 style="color: var(--color-primario); margin-bottom: 0.5rem;">📞 Teléfono</h3>
+                        <p><a href="tel:+1234567890" style="color: var(--color-primario); text-decoration: none;">+1 (234) 567-890</a></p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Disponible de Lunes a Viernes, 9AM - 6PM</p>
+                    </div>
+
+                    <div style="background: var(--color-fondo); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h3 style="color: var(--color-primario); margin-bottom: 0.5rem;">📧 Email</h3>
+                        <p><a href="mailto:info@fashionstyle.com" style="color: var(--color-primario); text-decoration: none;">info@fashionstyle.com</a></p>
+                        <p style="margin-top: 0.5rem;"><a href="mailto:soporte@fashionstyle.com" style="color: var(--color-primario); text-decoration: none;">soporte@fashionstyle.com</a></p>
+                    </div>
+
+                    <div style="background: var(--color-fondo); padding: 1.5rem; border-radius: 8px;">
+                        <h3 style="color: var(--color-primario); margin-bottom: 0.5rem;">🕐 Horario de Atención</h3>
+                        <p>Lunes a Viernes: 9:00 AM - 6:00 PM<br>
+                        Sábado: 10:00 AM - 4:00 PM<br>
+                        Domingo: Cerrado</p>
+                    </div>
+
+                    <!-- Redes Sociales -->
+                    <div style="margin-top: 2rem;">
+                        <h3 style="color: var(--color-primario); margin-bottom: 1rem;">Síguenos en Redes Sociales</h3>
+                        <div class="redes-sociales">
+                            <a href="#" title="Facebook">f</a>
+                            <a href="#" title="Twitter">t</a>
+                            <a href="#" title="Instagram">i</a>
+                            <a href="#" title="YouTube">y</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="container" style="background: var(--color-fondo); margin-top: 2rem;">
+            <h2 style="color: var(--color-primario); text-align: center; margin-bottom: 2rem;">Preguntas Frecuentes</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div>
+                    <h4 style="color: var(--color-primario); margin-bottom: 0.5rem;">¿Cuál es el tiempo de envío?</h4>
+                    <p>Ofrecemos envío estándar en 5-7 días hábiles y envío express en 2-3 días hábiles.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--color-primario); margin-bottom: 0.5rem;">¿Aceptan devoluciones?</h4>
+                    <p>Sí, aceptamos devoluciones dentro de 30 días de la compra sin costo adicional.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--color-primario); margin-bottom: 0.5rem;">¿Cuáles son los métodos de pago?</h4>
+                    <p>Aceptamos tarjetas de crédito, transferencia bancaria y billeteras digitales.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--color-primario); margin-bottom: 0.5rem;">¿Hacen entregas internacionales?</h4>
+                    <p>Actualmente entregamos solo en el territorio nacional. Pronto habilitaremos envíos internacionales.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-contenido">
+            <div class="footer-seccion">
+                <h3>FashionStyle</h3>
+                <p>Tu tienda de moda online de confianza</p>
+            </div>
+            <div class="footer-seccion">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="productos.html" style="color: white; text-decoration: none;">Productos</a></p>
+                <p><a href="contacto.html" style="color: white; text-decoration: none;">Contacto</a></p>
+                <p><a href="acerca-de-nosotros.html" style="color: white; text-decoration: none;">Acerca de Nosotros</a></p>
+            </div>
+            <div class="footer-seccion">
+                <h3>Síguenos</h3>
+                <div class="redes-sociales">
+                    <a href="#">f</a>
+                    <a href="#">t</a>
+                    <a href="#">i</a>
+                    <a href="#">y</a>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem;">
+                &copy; 2024 FashionStyle. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/carrito.js"></script>
+    <script>
+        function enviarContacto(event) {
+            event.preventDefault();
+            
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const telefono = document.getElementById('telefono').value;
+            const asunto = document.getElementById('asunto').value;
+            const mensaje = document.getElementById('mensaje').value;
+            
+            // Guardar contactos en localStorage
+            let contactos = JSON.parse(localStorage.getItem('contactos') || '[]');
+            
+            contactos.push({
+                nombre,
+                email,
+                telefono,
+                asunto,
+                mensaje,
+                fecha: new Date().toLocaleDateString()
+            });
+            
+            localStorage.setItem('contactos', JSON.stringify(contactos));
+            
+            mostrarNotificacion('¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.', 'exito');
+            document.getElementById('formulario-contacto').reset();
+        }
+    </script>
+</body>
+</html>

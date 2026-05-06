@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - FashionStyle</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">👗 FashionStyle</a>
+            <nav>
+                <a href="index.html">Principal</a>
+                <a href="productos.html">Productos</a>
+                <a href="acerca-de-nosotros.html">Acerca de Nosotros</a>
+                <a href="contacto.html">Contacto</a>
+                <div class="user-menu">
+                    <div class="carrito-icon">
+                        <a href="carrito.html">🛒 Carrito</a>
+                        <div class="carrito-count" style="display: none;">0</div>
+                    </div>
+                    <a href="admin/login.html">Administrador</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Nuestros Productos</h1>
+            <p>Descubre nuestra amplia colección de ropa de alta calidad</p>
+        </section>
+
+        <section class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="color: var(--color-primario);">Catálogo de Productos</h2>
+                <div>
+                    <label for="filtro-categoria" style="color: var(--color-primario); font-weight: bold;">Filtrar por categoría:</label>
+                    <select id="filtro-categoria" onchange="filtrarProductos()" style="padding: 0.5rem; margin-left: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="">Todas las categorías</option>
+                        <option value="Camisetas">Camisetas</option>
+                        <option value="Pantalones">Pantalones</option>
+                        <option value="Sudaderas">Sudaderas</option>
+                        <option value="Vestidos">Vestidos</option>
+                        <option value="Chaquetas">Chaquetas</option>
+                        <option value="Shorts">Shorts</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="productos-grid" id="productos-container">
+                <!-- Se cargarán dinámicamente -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-contenido">
+            <div class="footer-seccion">
+                <h3>FashionStyle</h3>
+                <p>Tu tienda de moda online de confianza</p>
+            </div>
+            <div class="footer-seccion">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="productos.html" style="color: white; text-decoration: none;">Productos</a></p>
+                <p><a href="contacto.html" style="color: white; text-decoration: none;">Contacto</a></p>
+                <p><a href="acerca-de-nosotros.html" style="color: white; text-decoration: none;">Acerca de Nosotros</a></p>
+            </div>
+            <div class="footer-seccion">
+                <h3>Síguenos</h3>
+                <div class="redes-sociales">
+                    <a href="#">f</a>
+                    <a href="#">t</a>
+                    <a href="#">i</a>
+                    <a href="#">y</a>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem;">
+                &copy; 2024 FashionStyle. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/carrito.js"></script>
+    <script>
+        function filtrarProductos() {
+            const categoria = document.getElementById('filtro-categoria').value;
+            const productos = obtenerProductos();
+            const container = document.getElementById('productos-container');
+            
+            let productosFiltrados = productos;
+            if (categoria) {
+                productosFiltrados = productos.filter(p => p.categoria === categoria);
+            }
+            
+            container.innerHTML = '';
+            
+            productosFiltrados.forEach(producto => {
+                const card = document.createElement('div');
+                card.className = 'producto-card';
+                
+                let tallasHTML = '<select id="talla-' + producto.id + '">';
+                tallasHTML += '<option value="">Selecciona una talla</option>';
+                producto.tallas.forEach(talla => {
+                    tallasHTML += `<option value="${talla}">${talla}</option>`;
+                });
+                tallasHTML += '</select>';
+                
+                card.innerHTML = `
+                    <div class="producto-imagen">
+                        <img src="imagenes/${producto.imagen}" alt="${producto.nombre}" 
+                             onerror="this.parentElement.textContent = '📷 ' + this.alt" />
+                    </div>
+                    <div class="producto-info">
+                        <div class="producto-nombre">${producto.nombre}</div>
+                        <div class="producto-descripcion">${producto.descripcion}</div>
+                        <div class="producto-precio">$${producto.precio.toFixed(2)}</div>
+                        <div class="producto-talla">
+                            <label>Talla:</label>
+                            ${tallasHTML}
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(${producto.id}, document.getElementById('talla-${producto.id}').value)">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            filtrarProductos();
+        });
+    </script>
+</body>
+</html>
