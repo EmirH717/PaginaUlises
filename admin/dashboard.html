@@ -98,8 +98,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="producto-imagen">Nombre de la Imagen</label>
-                        <input type="text" id="producto-imagen" placeholder="imagen1.jpg">
+                        <label for="producto-imagen">Imagen del Producto</label>
+                        <input type="file" id="producto-imagen" accept="image/*">
                     </div>
 
                     <div style="display: flex; gap: 1rem;">
@@ -132,22 +132,32 @@
         </div>
     </footer>
 
-    <script src="../js/app.js"></script>
     <script src="../js/carrito.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/api-client.js"></script>
     <script src="../js/admin.js"></script>
     <script>
-        // Cargar mensajes de contacto
-        function cargarMensajes() {
+        // Funciones para mensajes de contacto
+        async function cargarMensajes() {
             const contenedor = document.getElementById('lista-mensajes');
-            const contactos = JSON.parse(localStorage.getItem('contactos') || '[]');
-            
+            if (!contenedor) return;
+
+            contenedor.innerHTML = '<p style="text-align: center; color: #666;">Cargando mensajes...</p>';
+
+            const response = await api.obtenerContactos();
+            if (!response.success) {
+                contenedor.innerHTML = `<p style="text-align: center; color: red;">${response.mensaje || 'No se pudieron cargar los mensajes'}</p>`;
+                return;
+            }
+
+            const contactos = response.contactos || [];
             if (contactos.length === 0) {
                 contenedor.innerHTML = '<p style="text-align: center; color: #666;">No hay mensajes de contacto.</p>';
                 return;
             }
-            
+
             let html = '';
-            contactos.forEach((contacto, index) => {
+            contactos.forEach((contacto) => {
                 html += `
                     <div style="background: var(--color-fondo); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--color-primario);">
                         <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
@@ -156,38 +166,32 @@
                         </div>
                         <p style="margin: 0.5rem 0;"><strong>Email:</strong> ${contacto.email}</p>
                         <p style="margin: 0.5rem 0;"><strong>Teléfono:</strong> ${contacto.telefono || 'No proporcionado'}</p>
-                        <p style="margin: 0.5rem 0;"><strong>Fecha:</strong> ${contacto.fecha}</p>
+                        <p style="margin: 0.5rem 0;"><strong>Fecha:</strong> ${new Date(contacto.createdAt).toLocaleDateString()}</p>
                         <p style="margin: 0.5rem 0; background: white; padding: 0.5rem; border-radius: 4px;"><strong>Mensaje:</strong><br>${contacto.mensaje}</p>
-                        <button onclick="eliminarMensaje(${index})" style="background: var(--color-acento); color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">Eliminar</button>
+                        <button onclick="eliminarMensaje('${contacto._id}')" style="background: var(--color-acento); color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">Eliminar</button>
                     </div>
                 `;
             });
-            
+
             contenedor.innerHTML = html;
         }
         
-        function eliminarMensaje(index) {
+        async function eliminarMensaje(id) {
             if (confirm('¿Estás seguro de que deseas eliminar este mensaje?')) {
-                let contactos = JSON.parse(localStorage.getItem('contactos') || '[]');
-                contactos.splice(index, 1);
-                localStorage.setItem('contactos', JSON.stringify(contactos));
-                cargarMensajes();
-                mostrarNotificacion('Mensaje eliminado', 'exito');
+                const response = await api.eliminarContacto(id);
+                if (response.success) {
+                    mostrarNotificacion('Mensaje eliminado', 'exito');
+                    cargarMensajes();
+                } else {
+                    mostrarNotificacion(response.mensaje || 'No se pudo eliminar el mensaje', 'error');
+                }
             }
         }
-        
-        // Actualizar el cambiar de sección
-        const cambiarSeccionAdminOriginal = cambiarSeccionAdmin;
-        window.cambiarSeccionAdmin = function(seccion) {
-            cambiarSeccionAdminOriginal(seccion);
-            if (seccion === 'mensajes') {
-                cargarMensajes();
-            }
-        };
-        
-        // Cargar mensajes al iniciar
+
+        // Inicializar cuando se carga la página
         document.addEventListener('DOMContentLoaded', function() {
-            cargarMensajes();
+            verificarAutenticacion();
+            renderizarTablaProductos();
         });
     </script>
 </body>

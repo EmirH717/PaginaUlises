@@ -2,7 +2,7 @@
 // API CLIENT PARA FASHIONSTYLE
 // ============================================
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = '/api';
 
 class APIClient {
     constructor() {
@@ -16,10 +16,12 @@ class APIClient {
     }
 
     // Obtener headers con autenticación
-    getHeaders(incluirAuth = true) {
-        const headers = {
-            'Content-Type': 'application/json'
-        };
+    getHeaders(incluirAuth = true, isFormData = false) {
+        const headers = {};
+
+        if (!isFormData) {
+            headers['Content-Type'] = 'application/json';
+        }
 
         if (incluirAuth && this.token) {
             headers['Authorization'] = `Bearer ${this.token}`;
@@ -130,11 +132,13 @@ class APIClient {
             return { success: false, mensaje: 'Autenticación requerida' };
         }
 
+        const isFormData = producto instanceof FormData;
+
         try {
             const response = await fetch(`${API_URL}/productos`, {
                 method: 'POST',
-                headers: this.getHeaders(true),
-                body: JSON.stringify(producto)
+                headers: this.getHeaders(true, isFormData),
+                body: isFormData ? producto : JSON.stringify(producto)
             });
 
             return await response.json();
@@ -149,11 +153,13 @@ class APIClient {
             return { success: false, mensaje: 'Autenticación requerida' };
         }
 
+        const isFormData = producto instanceof FormData;
+
         try {
             const response = await fetch(`${API_URL}/productos/${id}`, {
                 method: 'PUT',
-                headers: this.getHeaders(true),
-                body: JSON.stringify(producto)
+                headers: this.getHeaders(true, isFormData),
+                body: isFormData ? producto : JSON.stringify(producto)
             });
 
             return await response.json();

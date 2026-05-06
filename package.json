@@ -7,6 +7,9 @@
     "start": "node server/server.js",
     "dev": "nodemon server/server.js"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "keywords": [
     "fashionstyle",
     "tienda",
@@ -16,13 +19,14 @@
   "author": "FashionStyle Team",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.5.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
-    "express-validator": "^7.0.0"
+    "mongoose": "^7.5.0",
+    "multer": "^2.1.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

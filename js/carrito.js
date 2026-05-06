@@ -6,6 +6,9 @@ function obtenerCarrito() {
     return carrito ? JSON.parse(carrito) : [];
 }
 
+// Hacer la función disponible globalmente
+window.obtenerCarrito = obtenerCarrito;
+
 // Guardar carrito en localStorage
 function guardarCarrito(carrito) {
     localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -14,8 +17,9 @@ function guardarCarrito(carrito) {
 
 // Agregar producto al carrito
 function agregarAlCarrito(productoId, talla) {
-    const productos = obtenerProductos();
-    const producto = productos.find(p => p.id === productoId);
+    const productos = window.productosDisponibles || obtenerProductos();
+    const idString = String(productoId);
+    const producto = productos.find(p => String(p._id || p.id) === idString);
     
     if (!producto) {
         mostrarNotificacion('Producto no encontrado', 'error');
@@ -28,13 +32,13 @@ function agregarAlCarrito(productoId, talla) {
     }
     
     let carrito = obtenerCarrito();
-    const itemExistente = carrito.find(item => item.id === productoId && item.talla === talla);
+    const itemExistente = carrito.find(item => String(item.id) === idString && item.talla === talla);
     
     if (itemExistente) {
         itemExistente.cantidad++;
     } else {
         carrito.push({
-            id: producto.id,
+            id: idString,
             nombre: producto.nombre,
             precio: producto.precio,
             talla: talla,
@@ -49,21 +53,23 @@ function agregarAlCarrito(productoId, talla) {
 
 // Eliminar producto del carrito
 function eliminarDelCarrito(productoId, talla) {
+    const idString = String(productoId);
     let carrito = obtenerCarrito();
-    carrito = carrito.filter(item => !(item.id === productoId && item.talla === talla));
+    carrito = carrito.filter(item => !(String(item.id) === idString && item.talla === talla));
     guardarCarrito(carrito);
 }
 
 // Actualizar cantidad del producto en el carrito
 function actualizarCantidad(productoId, talla, nuevaCantidad) {
+    const idString = String(productoId);
     let carrito = obtenerCarrito();
-    const item = carrito.find(item => item.id === productoId && item.talla === talla);
+    const item = carrito.find(item => String(item.id) === idString && item.talla === talla);
     
     if (item) {
         if (nuevaCantidad <= 0) {
             eliminarDelCarrito(productoId, talla);
         } else {
-            item.cantidad = nuevaCantidad;
+            item.cantidad = Number(nuevaCantidad);
             guardarCarrito(carrito);
         }
     }

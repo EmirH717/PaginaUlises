@@ -169,32 +169,31 @@
 
     <script src="js/app.js"></script>
     <script src="js/carrito.js"></script>
+    <script src="js/api-client.js"></script>
     <script>
-        function enviarContacto(event) {
+        async function enviarContacto(event) {
             event.preventDefault();
-            
+
             const nombre = document.getElementById('nombre').value;
             const email = document.getElementById('email').value;
             const telefono = document.getElementById('telefono').value;
             const asunto = document.getElementById('asunto').value;
             const mensaje = document.getElementById('mensaje').value;
-            
-            // Guardar contactos en localStorage
-            let contactos = JSON.parse(localStorage.getItem('contactos') || '[]');
-            
-            contactos.push({
+
+            const data = await api.crearContacto({
                 nombre,
                 email,
                 telefono,
                 asunto,
-                mensaje,
-                fecha: new Date().toLocaleDateString()
+                mensaje
             });
-            
-            localStorage.setItem('contactos', JSON.stringify(contactos));
-            
-            mostrarNotificacion('¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.', 'exito');
-            document.getElementById('formulario-contacto').reset();
+
+            if (data.success) {
+                mostrarNotificacion('¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.', 'exito');
+                document.getElementById('formulario-contacto').reset();
+            } else {
+                mostrarNotificacion(data.mensaje || 'No se pudo enviar el mensaje', 'error');
+            }
         }
     </script>
 </body>

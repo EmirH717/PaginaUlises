@@ -89,7 +89,7 @@ const inicializarBD = async () => {
         await admin.save();
         console.log('✅ Usuario administrador creado');
         console.log('   Email: admin@fashionstyle.com');
-        console.log('   Contraseña: 1234');
+        console.log('   Contraseña: emir1234');
 
         console.log('\n✨ Base de datos inicializada exitosamente');
         console.log('Puedes iniciar el servidor con: npm start');

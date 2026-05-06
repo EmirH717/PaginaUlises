@@ -87,11 +87,14 @@ function esAdministrador() {
 // Cerrar sesión
 function cerrarSesion() {
     localStorage.removeItem('usuarioLogueado');
-    window.location.href = 'index.html';
+    localStorage.removeItem('token');
+    window.location.href = '../index.html';
 }
 
 // Actualizar el contador del carrito en el header
 function actualizarContadorCarrito() {
+    if (typeof obtenerCarrito !== 'function') return;
+    
     const carrito = obtenerCarrito();
     const count = carrito.reduce((total, item) => total + item.cantidad, 0);
     const carritoCount = document.querySelector('.carrito-count');

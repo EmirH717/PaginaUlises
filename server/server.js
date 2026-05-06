@@ -1,8 +1,10 @@
+require('dotenv').config();
+
+const fs = require('fs');
 const express = require('express');
 const mongoose = require('mongoose');
-
 const cors = require('cors');
-require('dotenv').config();
+
 
 const app = express();
 
@@ -55,6 +57,10 @@ app.use((err, req, res, next) => {
 });
 
 const path = require('path');
+const imagenesDir = path.join(__dirname, '../imagenes');
+if (!fs.existsSync(imagenesDir)) {
+    fs.mkdirSync(imagenesDir, { recursive: true });
+}
 
 // Servir archivos estáticos (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, '../')));
@@ -90,5 +96,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
-console.log(process.env.MONGODB_URI);
